@@ -77,40 +77,48 @@
             transform: scale(1.2); /* Agrandar el tamaño al pasar el mouse */
         }
 
-        
+        .back-arrow {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('flecha.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
         section {
-            height: 100vh;
-            display: none; /* Ocultar secciones por defecto */
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh;
+            display: none;
             background-color: #f0f0f0;
-            position: relative;
+            position: fixed; /* Cambiar a fixed para que ocupe toda la pantalla */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 9999; /* Asegurar que esté por encima de todo */
         }
 
         section.active {
-            display: flex; /* Mostrar sección activa */
-        }
-        .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 60px; /* Ancho de la flecha */
-            height: 60px; /* Alto de la flecha */
-            background: url('flecha.png') no-repeat center center; /* Usar la imagen de la flecha */
-            background-size: contain; /* Ajustar la imagen al tamaño del contenedor */
-            border: none; /* Sin bordes */
-            cursor: pointer; /* Cambiar el cursor a predeterminado */
-            transition: none; /* Eliminar transiciones */
+            display: block;
         }
 
-        .image-container {
-            position: relative;
-            width: 150%; /* Mismo ancho que background-image */
-            height: auto;
+        .contenido-seccion {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 40px 40px;
+            line-height: 1.6;
         }
 
-        /* 🔽 Responsive adjustments for mobile */
         @media (max-width: 768px) {
+            .contenido-seccion {
+                padding: 70px 20px 20px;
+            }
+
             .background-image {
                 width: 370%; /* Ajustar tamaño en móviles */
                 min-height: 100%;
@@ -142,6 +150,17 @@
             .image-container {
                 width: 370%;
             }
+
+            section {
+                padding: 70px 20px 20px;
+            }
+            
+            .back-arrow {
+                width: 30px;
+                height: 30px;
+                top: 15px;
+                left: 15px;
+            }
         }
 
     </style>
@@ -150,63 +169,177 @@
     <div class="map-container">
         <div class="container" id="mapa">
             <img src="mapa.svg" alt="Mapa" class="background-image">
-            <a href="#seccion1" class="hotspot hotspot1" data-svg-x="88" data-svg-y="74.88" title="Ir a Sección 1"></a>
+            <a href="#seccion1" class="hotspot hotspot1" data-svg-x="88" data-svg-y="75.5" title="Ir a Sección 1"></a>
             <a href="#seccion2" class="hotspot hotspot2" data-svg-x="77" data-svg-y="62.07" title="Ir a Sección 2"></a>
-            <a href="#seccion3" class="hotspot hotspot3" data-svg-x="71.8" data-svg-y="40.7" title="Ir a Sección 3"></a>
-            <a href="#seccion4" class="hotspot hotspot4" data-svg-x="62.5" data-svg-y="40.19" title="Ir a Sección 4"></a>
-            <a href="#seccion5" class="hotspot hotspot5" data-svg-x="52.8" data-svg-y="44.5" title="Ir a Sección 5"></a>
+            <a href="#seccion3" class="hotspot hotspot3" data-svg-x="71.8" data-svg-y="41.5" title="Ir a Sección 3"></a>
+            <a href="#seccion4" class="hotspot hotspot4" data-svg-x="62.5" data-svg-y="42" title="Ir a Sección 4"></a>
+            <a href="#seccion5" class="hotspot hotspot5" data-svg-x="52.8" data-svg-y="45" title="Ir a Sección 5"></a>
             <a href="#seccion6" class="hotspot hotspot6" data-svg-x="45.85" data-svg-y="61.5" title="Ir a Sección 6"></a>
-            <a href="#seccion7" class="hotspot hotspot7" data-svg-x="39" data-svg-y="66" title="Ir a Sección 7"></a>
-            <a href="#seccion8" class="hotspot hotspot8" data-svg-x="31" data-svg-y="60" title="Ir a Sección 8"></a>
+            <a href="#seccion7" class="hotspot hotspot7" data-svg-x="39" data-svg-y="66.5" title="Ir a Sección 7"></a>
+            <a href="#seccion8" class="hotspot hotspot8" data-svg-x="30" data-svg-y="61" title="Ir a Sección 8"></a>
         </div>
     </div>
 
     <!-- Sección 1 -->
     <section id="seccion1">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 1</h1>
+        <div class="contenido-seccion">
+            <h1></h1>
+            <h2>Objetivo General</h2>
+            <p>Analizar el impacto de la legislación comunitaria en el sector ferroviario europeo, con especial atención a su influencia en la competitividad, la internacionalización de las empresas y la movilidad turística en España, Francia e Italia.</p>
+            <h2>Objetivos Específicos</h2>
+            <ol>
+                <li>Examinar la evolución histórica de la regulación ferroviaria en Europa y su influencia en la estructura del sector.</li>
+                <li>Comparar la implementación y efectos de la normativa ferroviaria comunitaria en España, Francia e Italia.</li>
+                <li>Evaluar el impacto de la regulación en la movilidad turística y la competitividad de los destinos europeos.</li>
+                <li>Identificar los principales retos y oportunidades que enfrenta el sector ferroviario ante los cambios regulatorios.</li>
+                <li>Analizar el papel de la sostenibilidad y la digitalización en el futuro del transporte ferroviario en Europa.</li>
+            </ol>
+        </div>
     </section>
 
     <!-- Sección 2 -->
     <section id="seccion2">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 2</h1>
+        <div class="contenido-seccion">
+            <h1></h1>
+            <p>Este estudio se ha desarrollado mediante una metodología de análisis documental, centrada en el examen de fuentes primarias las cuales decidí utilizar en base las siguientes condiciones de inclusión y exclusión:</p>
+            <p>Condiciones de inclusión: Se ha decidido utilizar fuentes de información de organismos gubernamentales tanto a nivel nacional como internacional, tantas directivas de la Unión Europea, como estudios estadísticos del Instituto Nacional de Estadística (INE) artículos de investigación de profesores universitarios de materias relacionadas al turismo, el transporte o dirección empresarial. Se ha recurrido a normativa comunitaria, informes oficiales de organismos públicos nacionales e internacionales, literatura académica especializada y bases de datos estadísticas. Asimismo, se ha empleado un enfoque comparativo para identificar similitudes y diferencias entre los tres países objeto de estudio: España, Francia e Italia.</p>
+            <p>En cuanto a las condiciones de exclusión, se ha optado por excluir fuentes de información consideradas relativamente obsoletas dependiendo del contexto, otros trabajos finales de estudio también han sido excluidos, al igual que fuentes que no estén disponibles en inglés o castellano. También se ha utilizado la base de datos de la universidad, en concreto el acceso a la base de datos estadísticos STATISTA, y las normas APA 7ma Edición.</p>
+            <p>El análisis se ha estructurado siguiendo un marco cronológico-temático que abarca desde la nacionalización de los sistemas ferroviarios, pasando por la liberalización impulsada por los Paquetes Ferroviarios de la Unión Europea, hasta los efectos actuales en el turismo. El estudio contempla también el impacto económico, tecnológico y en la calidad del servicio desde una perspectiva turística, contextualizando cada aspecto en relación con los objetivos de sostenibilidad y movilidad de la UE.</p>
+        </div>
     </section>
 
     <!-- Sección 3 -->
     <section id="seccion3">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 3</h1>
+        <div class="contenido-seccion">
+            <h1></h1>
+            <p>Aunque se ha intentado desarrollar un análisis integral, existen algunas limitaciones que es necesario considerar. En primer lugar, la investigación se basa exclusivamente en fuentes primarias, lo que implica una dependencia de la calidad y actualidad de los documentos consultados. Sin embargo, en cuanto a los documentos oficiales como las directivas europeas, a pesar de carecer de las limitaciones previamente mencionadas, estos documentos legales son bastante densos y complicados de comprender.</p>
+            <p>En segundo lugar, el enfoque comparativo entre tres países implica una simplificación de realidades nacionales complejas que podrían requerir estudios de caso más detallados.</p>
+            <p>Finalmente, el análisis del impacto turístico se ha centrado principalmente en el caso español, debido a la disponibilidad de datos en español y a la relación más directa del contenido con el lector.</p>
+        </div>
     </section>
 
     <!-- Sección 4 -->
     <section id="seccion4">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 4</h1>
+        <div class="contenido-seccion">
+            <h1>Marco Teórico</h1>
+            <p>El transporte ferroviario ha sido históricamente un pilar esencial en el desarrollo del turismo y la conectividad territorial en Europa. En un contexto de integración regional, la Unión Europea (UE) ha desempeñado un papel central en la configuración de las políticas ferroviarias de los Estados miembros, promoviendo un sistema interoperable, eficiente y sostenible. Este marco teórico aborda la historia y los fundamentos jurídicos y políticos de la legislación ferroviaria europea, así como la diversidad de su impacto en España, Francia e Italia, dando un principal enfoque a España. Este trabajo se centra primordialmente en la alta velocidad, pero también se estudian los demás servicios ferroviarios ofrecidos.</p>
+            <p>La evolución ha estado marcada por diferentes etapas: la expansión inicial impulsada por la Revolución Industrial, la consolidación de redes nacionales, la nacionalización progresiva tras las guerras mundiales, y la liberalización impulsada por la Unión Europea a finales del siglo XX. A lo largo del siglo XIX, el ferrocarril se convirtió en el modo de transporte por excelencia en muchos países europeos, permitiendo la conexión entre regiones y facilitando tanto el transporte de mercancías como el de personas (Giuntini, A., 2002).</p>
+            <p>En el contexto europeo, el ferrocarril se consolidó como una herramienta de integración territorial y de vertebración del espacio económico. Como apunta Merger (s.f.), Francia, por ejemplo, desarrolló un sistema centrado en París, con fuertes vínculos con el Estado, mientras que otros países adoptaron modelos más descentralizados. El siglo XX trajo consigo importantes transformaciones: durante las guerras mundiales, el sistema ferroviario fue de vital importancia logística y estratégica, y tras los conflictos, muchos países optaron por nacionalizar sus redes para garantizar su reconstrucción y funcionamiento.</p>
+            <p>La nacionalización de los ferrocarriles se convirtió en una tendencia dominante en Europa a lo largo del siglo XX, especialmente después de la Segunda Guerra Mundial. Esta política se justificó por razones estratégicas, económicas y sociales: la necesidad de reconstrucción, la garantía del servicio público y la reducción de desigualdades territoriales.</p>
+            <p>En Francia, la nacionalización se formalizó con la creación de la SNCF en 1937, como una empresa de economía mixta que posteriormente pasó a estar totalmente bajo control estatal tras 1945 (Merger, s.f.). En Italia, la red ferroviaria fue objeto de un proceso de centralización y nacionalización progresiva desde inicios del siglo XX, culminando con la creación de Ferrovie dello Stato en 1905 (Giuntini, 2002). España, por su parte, nacionalizó sus ferrocarriles tras la Guerra Civil mediante la creación de RENFE en 1941, unificando diversas líneas privadas que se encontraban en crisis (Giuntini, 2002; Apuntes de Gestión de Transportes, 2024).</p>
+            <p>Estos monopolios estatales permitieron avances en infraestructura, pero también generaron críticas por ineficiencias, falta de competitividad y déficits crónicos. Más adelante, la liberalización ferroviaria europea surgiría como respuesta a estos problemas.</p>
+            <p>A partir de los años noventa, la Unión Europea impulsó una profunda reforma del sector ferroviario con el objetivo de mejorar su competitividad, reducir costes y aumentar la calidad del servicio. Este proceso se materializó en los denominados Paquetes Ferroviarios, iniciados con la Directiva 91/440/CEE, y continuados hasta el Cuarto Paquete Ferroviario aprobado en 2016.</p>
+            <p>El enfoque comunitario se basó en varios principios clave: la separación entre gestión de infraestructuras y explotación de servicios, la apertura a la competencia, la interoperabilidad técnica, y la regulación independiente (European Commission, 2021). La liberalización ha generado una transformación estructural en los antiguos monopolios estatales, permitiendo la entrada de nuevos operadores y fomentando la inversión privada, especialmente en servicios de alta velocidad.</p>
+            <p><strong>España:</strong> En España, el proceso de liberalización comenzó con la transformación de RENFE en dos entidades: Renfe Operadora (gestión de servicios) y ADIF (gestión de infraestructuras), siguiendo las recomendaciones de la Comisión Europea («Informe de la Comisión Técnico-científica Para el Estudio de Mejoras En el Sector Ferroviario», 2013). Desde 2021, operadores como OUIGO e Iryo compiten en líneas de alta velocidad, especialmente en el corredor Madrid-Barcelona. Esta apertura ha supuesto una bajada de precios y un aumento en la oferta y calidad del servicio.</p>
+            <p><strong>Francia:</strong> Francia inició su reforma ferroviaria con la creación de SNCF Réseau y SNCF Mobilités, separando infraestructura de operación. A partir de 2020, el mercado ferroviario francés se ha abierto a la competencia nacional de pasajeros. No obstante, el país ha enfrentado una fuerte oposición sindical, especialmente ante propuestas de reforma de condiciones laborales (Cantón & Cantón, 2018). El desarrollo del TGV desde los años 80, el AVE galo, ha sido el emblema de la modernización ferroviaria francesa. Este modelo ha servido de inspiración para otros países, y ha sido clave para la cohesión territorial y el turismo nacional e internacional (Merger, s.f.).</p>
+            <p><strong>Italia:</strong> Italia ha sido pionera en la apertura del mercado de alta velocidad a operadores privados. Desde 2012, la empresa NTV-Italo compite con Trenitalia, logrando aumentar la demanda y bajar los precios (Beria & Grimaldi, 2017). A diferencia de otros países, Italia logró una liberalización temprana sin grandes conflictos sindicales ni institucionales.</p>
+            <p>A pesar de este éxito en la alta velocidad, el sistema ferroviario italiano presenta desequilibrios históricos, como el desfase entre el norte y el sur del país, deficiencias en líneas regionales, y una red que aún acusa los errores de planificación del siglo XIX, donde se priorizó la conexión entre ciudades antes que el desarrollo industrial (Giuntini, 2002). La fragmentación territorial y la necesidad de inversiones en infraestructuras del sur siguen siendo retos clave para el país.</p>
+        </div>
     </section>
 
     <!-- Sección 5 -->
     <section id="seccion5">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 5</h1>
+        <div class="contenido-seccion">
+            <h1></h1>
+            <p>Desde la década de los 90, la Unión Europea ha desarrollado una serie de medidas legislativas conocidas como Paquetes Ferroviarios, diseñadas para transformar el sector ferroviario de un modelo estatal y cerrado a uno liberalizado, interoperable y centrado en la competencia. El objetivo final ha sido crear un Espacio Ferroviario Europeo Único, basado en la apertura del mercado, la seguridad, la eficiencia económica y la sostenibilidad medioambiental. La evolución de estos paquetes refleja una estrategia progresiva, donde cada fase incorpora nuevos elementos regulatorios adaptados al contexto técnico, político y económico del momento (Parlamento Europeo, 2023).</p>
+            <br>
+            <p><strong> Primer Paquete Ferroviario </strong> marcó el inicio del proceso de liberalización del transporte ferroviario en la Unión Europea. Su aprobación en 2001 representó un punto de inflexión en la historia del ferrocarril europeo, ya que permitió, por primera vez, que las empresas ferroviarias de mercancías operaran en redes de otros Estados miembros.</p>
+            <p>Este paquete consistió en tres directivas clave:</p>
+            <ul>
+                <li>Directiva 2001/12/CE, que modificó la Directiva 91/440/CEE, introduciendo el principio de separación entre las funciones esenciales de los administradores de infraestructuras (como la asignación de capacidad y el cobro de tasas) y las operaciones de transporte. Aunque esta separación no requería una escisión estructural, sí exigía una separación contable clara y una independencia organizativa mínima para evitar conflictos de interés.</li>
+                <li>Directiva 2001/13/CE, que revisó las condiciones de concesión de licencias para las empresas ferroviarias, armonizándolas en toda la UE. Esta norma permitió la entrada de nuevos operadores que cumplían ciertos requisitos financieros, técnicos y de seguridad.</li>
+                <li>Directiva 2001/14/CE, que estableció reglas para el acceso a la infraestructura ferroviaria y la fijación de cánones. Impuso obligaciones de transparencia, objetividad y no discriminación en la asignación de capacidad, y promovió la existencia de órganos reguladores independientes.</li>
+            </ul>
+            <p>Con este paquete, se abrió el mercado internacional de transporte ferroviario de mercancías, favoreciendo el acceso abierto de empresas a las redes ferroviarias de otros países, lo cual incentivó una mayor competitividad, reducción de precios y eficiencia operativa.</p>
+            <br>
+            <p><strong>El Segundo Paquete Ferroviario</strong>, adoptado en 2004, respondió a la necesidad de armonizar la seguridad y la interoperabilidad del sistema ferroviario europeo, así como de ampliar el mercado liberalizado al transporte internacional de mercancías dentro de los Estados miembros.</p>
+            <p>Este paquete incluyó los siguientes instrumentos:</p>
+            <ul>
+                <li>Directiva 2004/49/CE sobre la seguridad ferroviaria, que estableció principios comunes para la gestión, regulación y supervisión de la seguridad ferroviaria. Requirió que cada Estado miembro estableciera una autoridad nacional de seguridad y un organismo de investigación independiente para los accidentes ferroviarios.</li>
+                <li>Directiva 2004/50/CE, que modificó las directivas anteriores sobre interoperabilidad (alta velocidad y convencional), introduciendo requisitos técnicos y operativos comunes a fin de reducir las barreras entre redes nacionales.</li>
+                <li>Directiva 2004/51/CE, que amplió el acceso al mercado para permitir el transporte internacional de mercancías dentro del territorio nacional de un Estado miembro, completando así la liberalización del transporte ferroviario de mercancías en toda la UE a partir de 2007.</li>
+                <li>Reglamento (CE) n.º 881/2004, por el cual se creó la Agencia Ferroviaria Europea (ERA), con el mandato de emitir especificaciones técnicas de interoperabilidad (ETI), apoyar la armonización normativa y mejorar los niveles de seguridad ferroviaria en toda la UE.</li>
+            </ul>
+            <p>Este segundo paquete fortaleció las condiciones técnicas e institucionales para operar trenes a través de fronteras, superando los problemas derivados de las diferencias técnicas entre redes nacionales (por ejemplo, sistemas de señalización o de energía). Además, sentó las bases de una cultura común de seguridad ferroviaria.</p>
+            <br>
+            <p><strong>El Tercer Paquete Ferroviario</strong> fue adoptado en 2007 como respuesta a la necesidad de avanzar en la liberalización del transporte internacional de pasajeros y de reforzar los derechos de los viajeros.</p>
+            <p>Los principales instrumentos de este paquete fueron:</p>
+            <ul>
+                <li>Directiva 2007/58/CE, que modificó la Directiva 91/440/CEE y la Directiva 2001/14/CE, otorgando a las empresas ferroviarias el derecho a operar servicios internacionales de transporte de pasajeros en toda la UE desde 2010. Esta apertura incluía el derecho de cabotaje, es decir, recoger y dejar pasajeros dentro de un Estado miembro distinto del de origen de la empresa, siempre que formara parte de un servicio internacional.</li>
+                <li>Directiva 2007/59/CE, que estableció una certificación común para maquinistas que operan en redes internacionales, incluyendo requisitos sobre cualificaciones, exámenes médicos, formación técnica y conocimientos lingüísticos. La finalidad era garantizar un nivel uniforme de competencia en toda la Unión.</li>
+                <li>Reglamento (CE) n.º 1371/2007, sobre los derechos y obligaciones de los pasajeros de ferrocarril. Este reglamento introdujo normas mínimas en materia de información, compensación por retrasos, asistencia a personas con discapacidad, protección frente a cancelaciones y calidad del servicio.</li>
+            </ul>
+            <p>Este paquete representó un avance significativo para los usuarios del transporte ferroviario, mejorando la calidad del servicio y la protección de sus derechos como consumidores.</p>
+            <br>
+            <p><strong>El Cuarto Paquete Ferroviario</strong>, aprobado en 2016, constituye el paso más ambicioso en la creación de un Espacio Ferroviario Europeo Único. Su objetivo principal fue completar la apertura del mercado ferroviario de pasajeros, mejorar la gobernanza de la infraestructura y simplificar los procedimientos técnicos mediante la centralización en la Agencia Ferroviaria de la Unión Europea (ERA).</p>
+            <p>Este paquete se divide en dos pilares:</p>
+            <p><strong>Pilar técnico:</strong></p>
+            <ul>
+                <li>Reglamento (UE) 2016/796, que refuerza las competencias de la Agencia Ferroviaria de la Unión Europea, permitiéndole emitir certificados de seguridad y autorizaciones de vehículos válidas en todos los Estados miembros, lo que reduce la carga administrativa para las empresas.</li>
+                <li>Directiva (UE) 2016/797, sobre interoperabilidad ferroviaria, que estandariza aún más los requisitos técnicos y operacionales entre redes nacionales, facilitando los servicios transfronterizos.</li>
+                <li>Directiva (UE) 2016/798, sobre seguridad ferroviaria, que refuerza las responsabilidades de las empresas ferroviarias en la gestión de riesgos y promueve una cultura de seguridad basada en la mejora continua.</li>
+            </ul>
+            <p><strong>Pilar político:</strong></p>
+            <ul>
+                <li>Directiva (UE) 2016/2370, que modifica la Directiva 2012/34/UE, exige una separación más estricta entre los administradores de infraestructura (como ADIF o SNCF Réseau) y los operadores, e introduce nuevas normas sobre la adjudicación de contratos de servicio público mediante licitación competitiva (obligatoria desde diciembre de 2023)</li>
+            </ul>
+            <p>El Cuarto Paquete ha permitido a nuevos operadores ofrecer servicios nacionales de transporte de pasajeros, impulsando una mayor integración del sistema ferroviario europeo tanto desde el punto de vista técnico como comercial.</p>
+        </div>
     </section>
 
     <!-- Sección 6 -->
     <section id="seccion6">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 6</h1>
+        <div class="contenido-seccion">
+            <p>Como consecuencia de la progresiva aplicación de la legislación ferroviaria europea, las compañías ferroviarias estatales han debido adaptarse a la legislación, empezando por la separación de la entidad operadora y la entidad encargada de la gestión de infraestructuras.</p>
+            <p>En España, Renfe se convirtió en Renfe Operadora y Adif.</p>
+            <br>
+            <figure>
+                <img src="renfe.jpg" alt="División del grupo Renfe en ADIF y Renfe">
+                <figcaption>División del grupo Renfe en empresa operadora de infraestructura (ADIF) y operadora de material rodante (Renfe). Fuente: Marca por hombro</figcaption>
+            </figure>
+            <br>
+            <p>En Francia, SNCF se dividió en SNCF Mobilités/Voyageurs y SNCF Réseau.</p>
+            <figure>
+                <img src="sncf.jpg" alt="División del grupo SNCF en SNCF Réseau y SNCF Mobilités">
+                <figcaption>División del grupo SNCF en empresa operadora de infraestructura (SNCF Réseau) y operadora de material rodante (SNCF Mobilités). Fuente: Les Echos</figcaption>
+            </figure>
+            <br>
+            <p>En Italia, Ferrovie dello Stato se dividió en Trenitalia y Rete Ferroviaria Italiana.</p>
+            <br>
+            <p>En España, la entrada de nuevos operadores generó un impacto positivo de 578 millones en 2023 según:</p>
+            <p><a href="https://www.cnmc.es/sites/default/files/2554930_16.pdf" target="_blank">Estudio sobre la liberalización del transporte de viajeros por ferrocarril</a></p>
+            <figure>
+                <img src="grafico.png" alt="Gráfico de impacto económico">
+                <figcaption>Gráfico de impacto económico. Fuente: Datos estadísticos extraídos del INE.</figcaption>
+            </figure>
+            <br>
+            <p>Los datos estadísticos extraídos del INE para la creación del gráfico se encuentran <a href="https://www.ine.es/jaxiT3/Tabla.htm?t=20239&L=0" target="_blank">aquí</a>. Solo tiene que seleccionar los meses desde 2015 a 2024 y cargar la tabla con los datos seleccionados.</p>
+        </div>
     </section>
 
     <!-- Sección 7 -->
     <section id="seccion7">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 7</h1>
+        <div class="contenido-seccion">
+            <p>El turismo y el ferrocarril han mantenido una relación simbiótica desde sus orígenes. En el caso de España, el transporte ferroviario no solo ha facilitado el acceso a destinos turísticos tradicionales, sino que también ha contribuido al desarrollo de nuevos polos turísticos y a la redistribución de los flujos de visitantes y sus beneficios económicos hacia regiones menos saturadas.</p>
+            <p>Sánchez, J. C. (2025b, febrero 28). El ferrocarril y el turismo. <a href="https://www.doshermanasaldia.com/post/el-ferrocarril-y-el-turismo" target="_blank"> Dos Hermanas al día.</a></p>
+            <p>Además de los servicios regulares de transporte, Renfe y otras entidades han desarrollado una oferta de trenes turísticos de alta gama destinados específicamente al ocio y la experiencia. Como el transcantábrico en el norte de España, el tren Al Andaluz en Andalucía o el Tren del Vino en La Rioja.</p>
+            <p>P.V. (2025, 26 febrero). Los cuatro trenes turísticos de lujo de Renfe para recorrer España este 2025. <a href="https://www.expansion.com/fueradeserie/viajes/2025/02/26/67b31022e5fdead0198b456d.html" target="_blank"> Expansión.</a> </p>
+        </div>
     </section>
 
     <!-- Sección 8 -->
     <section id="seccion8">
         <a href="#mapa" class="back-arrow"></a>
-        <h1>Sección 8</h1>
+        <div class="contenido-seccion">
+            <h1>Conclusiones</h1>
+        </div>
     </section>
 
     <script src="map.js"></script>
@@ -329,6 +462,11 @@
                 // Desplazar automáticamente hacia el mapa
                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
+        });
+
+        // Configurar la posición inicial del contenedor más a la izquierda
+    window.addEventListener('load', () => {
+        container.scrollLeft = 1100; // Ajusta este valor según la posición deseada
         });
     </script>
 
