@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mapa Interactivo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            scroll-behavior: smooth;
+            width: 100%;
+            height: 100%;
+            font-family: sans-serif;
+            /* overflow: hidden; Deshabilitar desplazamiento global */
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: #f0f0f0; /* Color de fondo para evitar espacios blancos */
+        }
+
+        .map-wrapper {
+            position: relative;
+            width: 150%; /* Mismo ancho que background-image */
+            height: auto;
+        }
+
+        .container {
+            position: relative; /* Asegurar que los hotspots se posicionen relativos al contenedor */
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Permitir desplazamiento dentro del contenedor */
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x pan-y;
+            cursor: grab; /* Cambiar cursor para indicar que se puede arrastrar */
+            background: #f0f0f0;
+        }
+
+        .container:active {
+            cursor: grabbing; /* Cambiar cursor al arrastrar */
+        }
+
+        .background-image {
+            position: relative; /* Cambiar a relative para que los hotspots sigan el tamaño del mapa */
+            top: 0;
+            left: 0;
+            width: 150%; /* Reducir el zoom inicial en escritorio */
+            height: auto; /* Mantener proporción vertical */
+            max-width: none;
+            object-fit: cover; /* Ajustar para que no se corte */
+            object-position: center;
+            z-index: 1;
+        }
+
+        .hotspot {
+            position: absolute; /* Cambiar a absolute para que estén encima de la imagen */
+            transform-origin: center;
+            background: url('pin.svg') no-repeat center center; /* Usar la imagen pin.svg como fondo */
+            background-size: contain; /* Ajustar la imagen al tamaño del contenedor */
+            border: none; /* Sin bordes */
+            width: clamp(30px, 5vw, 60px);  /* mínimo 30px, 5vw relativo, máximo 60px */
+            height: clamp(30px, 5vw, 60px);
+            cursor: pointer; /* Cambiar cursor al pasar por encima */
+            z-index: 2;
+        }
+
+        .hotspot:hover {
+            transform: scale(1.2); /* Agrandar el tamaño al pasar el mouse */
+        }
+
+        
+        section {
+            height: 100vh;
+            display: none; /* Ocultar secciones por defecto */
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        section.active {
+            display: flex; /* Mostrar sección activa */
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px; /* Ancho de la flecha */
+            height: 60px; /* Alto de la flecha */
+            background: url('flecha.png') no-repeat center center; /* Usar la imagen de la flecha */
+            background-size: contain; /* Ajustar la imagen al tamaño del contenedor */
+            border: none; /* Sin bordes */
+            cursor: pointer; /* Cambiar el cursor a predeterminado */
+            transition: none; /* Eliminar transiciones */
+        }
+
+        .image-container {
+            position: relative;
+            width: 150%; /* Mismo ancho que background-image */
+            height: auto;
+        }
+
+        /* 🔽 Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .background-image {
+                width: 370%; /* Ajustar tamaño en móviles */
+                min-height: 100%;
+                object-fit: cover; /* Rellenar pantalla en móviles */
+            }
+
+            .map-container, .container {
+                height: 100vh; /* Forzar altura completa en móviles */
+                overflow: hidden; /* Evitar scroll vertical */
+            }
+
+            .container {
+                position: fixed; /* Fijar el contenedor en móviles */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+
+            .hotspot {
+                width: 8vw; /* Ajustar tamaño para pantallas pequeñas */
+                height: 8vw;
+            }
+            
+            .map-wrapper {
+                width: 370%; /* Mismo ancho que background-image en móviles */
+            }
+
+            .image-container {
+                width: 370%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="map-container">
+        <div class="container" id="mapa">
+            <img src="mapa.svg" alt="Mapa" class="background-image">
+            <a href="#seccion1" class="hotspot hotspot1" data-svg-x="88" data-svg-y="74.88" title="Ir a Sección 1"></a>
+            <a href="#seccion2" class="hotspot hotspot2" data-svg-x="77" data-svg-y="62.07" title="Ir a Sección 2"></a>
+            <a href="#seccion3" class="hotspot hotspot3" data-svg-x="71.8" data-svg-y="40.7" title="Ir a Sección 3"></a>
+            <a href="#seccion4" class="hotspot hotspot4" data-svg-x="62.5" data-svg-y="40.19" title="Ir a Sección 4"></a>
+            <a href="#seccion5" class="hotspot hotspot5" data-svg-x="52.8" data-svg-y="44.5" title="Ir a Sección 5"></a>
+            <a href="#seccion6" class="hotspot hotspot6" data-svg-x="45.85" data-svg-y="61.5" title="Ir a Sección 6"></a>
+            <a href="#seccion7" class="hotspot hotspot7" data-svg-x="39" data-svg-y="66" title="Ir a Sección 7"></a>
+            <a href="#seccion8" class="hotspot hotspot8" data-svg-x="31" data-svg-y="60" title="Ir a Sección 8"></a>
+        </div>
+    </div>
+
+    <!-- Sección 1 -->
+    <section id="seccion1">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 1</h1>
+    </section>
+
+    <!-- Sección 2 -->
+    <section id="seccion2">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 2</h1>
+    </section>
+
+    <!-- Sección 3 -->
+    <section id="seccion3">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 3</h1>
+    </section>
+
+    <!-- Sección 4 -->
+    <section id="seccion4">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 4</h1>
+    </section>
+
+    <!-- Sección 5 -->
+    <section id="seccion5">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 5</h1>
+    </section>
+
+    <!-- Sección 6 -->
+    <section id="seccion6">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 6</h1>
+    </section>
+
+    <!-- Sección 7 -->
+    <section id="seccion7">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 7</h1>
+    </section>
+
+    <!-- Sección 8 -->
+    <section id="seccion8">
+        <a href="#mapa" class="back-arrow"></a>
+        <h1>Sección 8</h1>
+    </section>
+
+    <script src="map.js"></script>
+    <script>
+        const container = document.querySelector('.container');
+        const backgroundImage = document.querySelector('.background-image');
+        const hotspots = document.querySelectorAll('.hotspot');
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        function adjustHotspots() {
+            const imageRect = backgroundImage.getBoundingClientRect();
+            hotspots.forEach(hotspot => {
+                const svgX = parseFloat(hotspot.dataset.svgX);
+                const svgY = parseFloat(hotspot.dataset.svgY);
+                // Calcular posición relativa al tamaño actual de la imagen
+                hotspot.style.left = `${(svgX / 100) * imageRect.width}px`;
+                hotspot.style.top = `${(svgY / 100) * imageRect.height}px`;
+            });
+        }
+
+        adjustHotspots();
+        // Evento para reajustar la posición cuando se redimensione la ventana.
+        window.addEventListener('resize', adjustHotspots);
+
+        // Eventos para arrastrar con el ratón
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - container.offsetLeft + container.scrollLeft;
+            startY = e.pageY - container.offsetTop + container.scrollTop;
+            container.style.cursor = 'grabbing';
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+            container.style.cursor = 'grab';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+            container.style.cursor = 'grab';
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft + container.scrollLeft;
+            const y = e.pageY - container.offsetTop + container.scrollTop;
+            const walkX = (x - startX);
+            const walkY = (y - startY);
+            container.scrollLeft = startX - e.pageX + container.offsetLeft;
+            container.scrollTop = startY - e.pageY + container.offsetTop;
+            requestAnimationFrame(adjustHotspots);
+        });
+
+        // Eventos táctiles para dispositivos móviles
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            startX = touch.pageX - container.offsetLeft;
+            startY = touch.pageY - container.offsetTop;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        }, { passive: false });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const x = touch.pageX - container.offsetLeft;
+            const y = touch.pageY - container.offsetTop;
+            
+            const deltaX = (startX - x) * 1.5;
+            const deltaY = (startY - y) * 1.5;
+            
+            container.scrollLeft = scrollLeft + deltaX;
+            container.scrollTop = scrollTop + deltaY;
+            
+            requestAnimationFrame(adjustHotspots);
+        }, { passive: false });
+
+        container.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        container.addEventListener('touchcancel', () => {
+            isDragging = false;
+        });
+
+        // Prevenir el zoom del navegador en dispositivos móviles
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Mostrar sección al hacer clic en un hotspot
+        const sections = document.querySelectorAll('section');
+
+        hotspots.forEach((hotspot, index) => {
+            hotspot.addEventListener('click', (e) => {
+                e.preventDefault();
+                sections.forEach(section => section.classList.remove('active')); // Ocultar todas las secciones
+                sections[index].classList.add('active'); // Mostrar la sección correspondiente
+                container.style.display = 'none'; // Ocultar el mapa
+
+                // Desplazar automáticamente hacia la sección activa
+                sections[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        // Volver al mapa al hacer clic en la flecha de regreso
+        const backArrows = document.querySelectorAll('.back-arrow');
+        backArrows.forEach(arrow => {
+            arrow.addEventListener('click', (e) => {
+                e.preventDefault();
+                sections.forEach(section => section.classList.remove('active')); // Ocultar todas las secciones
+                container.style.display = 'block'; // Mostrar el mapa
+
+                // Desplazar automáticamente hacia el mapa
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+    </script>
+
+</body>
+</html>
